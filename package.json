@@ -25,8 +25,7 @@
     },
     "dependencies": {
         "@inertiajs/vue3": "^2.0.0",
-        "@nuxt/ui": "^3.3.0",
-        "@nuxt/ui-pro": "^3.3.0",
+        "@nuxt/ui": "https://pkg.pr.new/@nuxt/ui@4781",
         "@tailwindcss/vite": "^4.1.11",
         "@vitejs/plugin-vue": "^6.0.0",
         "@vueuse/core": "^12.8.2",
