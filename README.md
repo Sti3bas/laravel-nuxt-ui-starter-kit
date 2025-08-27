@@ -43,7 +43,7 @@ One-click installation with [Laravel Herd](https://herd.laravel.com):
 Create a new Laravel application using the official [Laravel Installer](https://laravel.com/docs/12.x/starter-kits#community-maintained-starter-kits):
 
 ```bash
-laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit:2.0.0-alpha
+laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit:v4.x-dev
 ```
 
 ## Screenshots
