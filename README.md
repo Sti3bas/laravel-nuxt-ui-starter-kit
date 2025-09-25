@@ -8,9 +8,6 @@ Inertia allows you to build modern, single-page Vue applications using classic s
 
 This Vue starter kit utilizes Vue 3 and the Composition API, TypeScript, and the [Nuxt UI](https://ui.nuxt.com) component library.
 
-> [!IMPORTANT]  
-> Nuxt UI v4 is currently in alpha and **not ready for production use**. You can track its progress here: https://github.com/nuxt/ui/issues/4488
-
 ## What's inside?
 
 This starter kit is based on [laravel/vue-starter-kit](https://github.com/laravel/vue-starter-kit) and includes the following features:
@@ -43,7 +40,7 @@ One-click installation with [Laravel Herd](https://herd.laravel.com):
 Create a new Laravel application using the official [Laravel Installer](https://laravel.com/docs/12.x/starter-kits#community-maintained-starter-kits):
 
 ```bash
-laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit:v4.x-dev
+laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit
 ```
 
 ## Screenshots
