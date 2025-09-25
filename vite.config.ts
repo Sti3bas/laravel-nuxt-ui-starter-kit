@@ -1,4 +1,4 @@
-import uiPro from '@nuxt/ui-pro/vite';
+import ui from '@nuxt/ui/vite';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
@@ -20,8 +20,9 @@ export default defineConfig({
                 },
             },
         }),
-        uiPro({
+        ui({
             inertia: true,
+            colorMode: true,
             components: {
                 dirs: ['resources/js/components'],
             },
