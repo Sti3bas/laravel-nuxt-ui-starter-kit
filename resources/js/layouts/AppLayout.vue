@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
+import FlashToasts from '@/components/FlashToasts.vue';
 import UserMenu from '@/components/UserMenu.vue';
-import type { User } from '@/types';
+import { edit as editAppearance } from '@/routes/appearance';
+import { edit as editProfile } from '@/routes/profile';
+import { edit as editSecurity } from '@/routes/security';
+import { dashboard } from '@/routes';
 import { usePage } from '@inertiajs/vue3';
 import type { NavigationMenuItem } from '@nuxt/ui';
 import { ref, watch } from 'vue';
 
 const page = usePage();
-const user = page.props.auth.user as User;
+const user = page.props.auth.user;
 
 const isOpen = ref(false);
 const isCollapsed = ref(!page.props.sidebarOpen);
@@ -17,35 +21,35 @@ const links = [
         {
             label: 'Dashboard',
             icon: 'i-lucide-house',
-            to: '/dashboard',
+            to: dashboard().url,
             onSelect: () => {
                 isOpen.value = false;
             },
         },
         {
             label: 'Settings',
-            to: '/settings',
+            to: editProfile().url,
             icon: 'i-lucide-settings',
             defaultOpen: true,
             type: 'trigger',
             children: [
                 {
                     label: 'Profile',
-                    to: '/settings/profile',
+                    to: editProfile().url,
                     onSelect: () => {
                         isOpen.value = false;
                     },
                 },
                 {
-                    label: 'Password',
-                    to: '/settings/password',
+                    label: 'Security',
+                    to: editSecurity().url,
                     onSelect: () => {
                         isOpen.value = false;
                     },
                 },
                 {
                     label: 'Appearance',
-                    to: '/settings/appearance',
+                    to: editAppearance().url,
                     onSelect: () => {
                         isOpen.value = false;
                     },
@@ -73,6 +77,8 @@ watch(
 
 <template>
     <UApp>
+        <FlashToasts />
+
         <UDashboardGroup unit="rem" :persistent="false">
             <UDashboardSidebar
                 id="default"

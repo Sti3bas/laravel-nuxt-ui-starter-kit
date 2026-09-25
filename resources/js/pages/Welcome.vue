@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
 import { Head } from '@inertiajs/vue3';
+import { dashboard, login } from '@/routes';
+/* @chisel-registration */
+import { register } from '@/routes';
+/* @end-chisel-registration */
 </script>
 
 <template>
@@ -22,30 +26,28 @@ import { Head } from '@inertiajs/vue3';
                 color="neutral"
                 variant="outline"
                 class="hidden lg:inline-flex"
-                :to="route('dashboard')"
+                :to="dashboard().url"
             />
 
             <template v-else>
-                <UButton icon="i-lucide-log-in" color="neutral" variant="ghost" :to="route('login')" class="lg:hidden" />
+                <UButton icon="i-lucide-log-in" color="neutral" variant="ghost" :to="login().url" class="lg:hidden" />
 
-                <UButton label="Log in" color="neutral" variant="outline" :to="route('login')" class="hidden lg:inline-flex" />
+                <UButton label="Log in" color="neutral" variant="outline" :to="login().url" class="hidden lg:inline-flex" />
 
-                <UButton
-                    label="Register"
-                    color="neutral"
-                    trailing-icon="i-lucide-arrow-right"
-                    class="hidden lg:inline-flex"
-                    :to="route('register')"
-                />
+                <!-- @chisel-registration -->
+                <UButton label="Register" color="neutral" trailing-icon="i-lucide-arrow-right" class="hidden lg:inline-flex" :to="register().url" />
+                <!-- @end-chisel-registration -->
             </template>
         </template>
 
         <template #body>
-            <UButton v-if="$page.props.auth.user" label="Dashboard" color="neutral" variant="outline" block :to="route('dashboard')" />
+            <UButton v-if="$page.props.auth.user" label="Dashboard" color="neutral" variant="outline" block :to="dashboard().url" />
 
             <template v-else>
-                <UButton label="Log in" color="neutral" variant="subtle" :to="route('login')" block class="mb-3" />
-                <UButton label="Register" color="neutral" :to="route('register')" block />
+                <UButton label="Log in" color="neutral" variant="subtle" :to="login().url" block class="mb-3" />
+                <!-- @chisel-registration -->
+                <UButton label="Register" color="neutral" :to="register().url" block />
+                <!-- @end-chisel-registration -->
             </template>
         </template>
     </UHeader>
