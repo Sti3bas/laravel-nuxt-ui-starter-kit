@@ -36,3 +36,7 @@ components.d.ts
 resources/js/actions
 resources/js/routes
 resources/js/wayfinder
+
+# Lock files are intentionally not committed (starter kit resolves per-platform)
+composer.lock
+package-lock.json
