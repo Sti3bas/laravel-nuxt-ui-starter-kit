@@ -32,7 +32,7 @@ const { t, locale, localeOptions, setLocale } = useI18n();
                 required
                 class="flex items-start justify-between gap-4 max-sm:flex-col"
             >
-                <USelect :model-value="locale" :items="localeOptions" class="w-40" @update:model-value="setLocale" />
+                <USelect :model-value="locale" :items="localeOptions" @update:model-value="setLocale" />
             </UFormField>
         </UPageCard>
     </div>
