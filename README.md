@@ -56,7 +56,7 @@ laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit
 ![Login](.github/screenshots/light/login.png)
 ![Dashboard](.github/screenshots/light/dashboard.png)
 ![Profile settings](.github/screenshots/light/profile-settings.png)
-![Password settings](.github/screenshots/light/password-settings.png)
+![Security settings](.github/screenshots/light/security-settings.png)
 ![Appearance settings](.github/screenshots/light/appearance-settings.png)
 
 <details>
@@ -66,7 +66,7 @@ laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit
 ![Login](.github/screenshots/dark/login.png)
 ![Dashboard](.github/screenshots/dark/dashboard.png)
 ![Profile settings](.github/screenshots/dark/profile-settings.png)
-![Password settings](.github/screenshots/dark/password-settings.png)
+![Security settings](.github/screenshots/dark/security-settings.png)
 ![Appearance settings](.github/screenshots/dark/appearance-settings.png)
 
 </details>
