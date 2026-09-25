@@ -1,63 +1,64 @@
 <script setup lang="ts">
-import PasswordInput from '@/components/form/PasswordInput.vue';
-import AuthLayout from '@/layouts/AuthLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import PasswordInput from '@/components/PasswordInput.vue';
+import TextLink from '@/components/TextLink.vue';
+import { Form, Head } from '@inertiajs/vue3';
+import { login } from '@/routes';
+import { store } from '@/routes/register';
 
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+defineProps<{
+    passwordRules: string;
+}>();
+
+defineOptions({
+    layout: {
+        title: 'Create an account',
+        description: 'Enter your details below to create your account',
+    },
 });
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
-};
 </script>
 
 <template>
-    <AuthLayout title="Create an account" description="Enter your details below to create your account">
-        <Head title="Register" />
+    <Head title="Register" />
 
-        <UForm :state="form" @submit.prevent="submit" class="w-full space-y-4">
-            <UFormField label="Name" name="name" :error="form.errors.name">
-                <UInput type="text" class="w-full" :tabindex="1" autocomplete="name" placeholder="Full name" v-model="form.name" autofocus required />
+    <Form v-bind="store.form()" :reset-on-success="['password', 'password_confirmation']" v-slot="{ errors, processing }" class="flex flex-col gap-6">
+        <div class="grid gap-4">
+            <UFormField label="Name" name="name" :error="errors.name">
+                <UInput type="text" name="name" required v-focus :tabindex="1" autocomplete="name" placeholder="Full name" class="w-full" />
             </UFormField>
 
-            <UFormField label="Email" name="email" :error="form.errors.email">
-                <UInput
-                    type="email"
-                    class="w-full"
-                    :tabindex="2"
-                    autocomplete="email"
-                    placeholder="email@example.com"
-                    v-model="form.email"
+            <UFormField label="Email" name="email" :error="errors.email">
+                <UInput type="email" name="email" required :tabindex="2" autocomplete="email" placeholder="email@example.com" class="w-full" />
+            </UFormField>
+
+            <UFormField label="Password" name="password" :error="errors.password">
+                <PasswordInput
+                    name="password"
                     required
+                    :tabindex="3"
+                    autocomplete="new-password"
+                    placeholder="Password"
+                    :passwordrules="passwordRules"
+                    class="w-full"
                 />
             </UFormField>
 
-            <UFormField label="Password" name="password" :error="form.errors.password">
-                <PasswordInput :tabindex="3" v-model="form.password" class="w-full" autocomplete="new-password" placeholder="Password" required />
-            </UFormField>
-
-            <UFormField label="Confirm password" name="password_confirmation" :error="form.errors.password_confirmation">
+            <UFormField label="Confirm password" name="password_confirmation" :error="errors.password_confirmation">
                 <PasswordInput
-                    :tabindex="5"
-                    v-model="form.password_confirmation"
-                    class="w-full"
+                    name="password_confirmation"
+                    required
+                    :tabindex="4"
                     autocomplete="new-password"
                     placeholder="Confirm password"
-                    required
+                    class="w-full"
                 />
             </UFormField>
 
-            <UButton type="submit" label="Create account" :tabindex="6" :loading="form.processing" block />
-        </UForm>
-
-        <div class="mt-2 text-center text-sm text-muted">
-            Already have an account? <ULink :to="route('login')" class="font-medium text-primary">Log in</ULink>.
+            <UButton type="submit" label="Create account" class="mt-2" block :tabindex="5" :loading="processing" data-test="register-user-button" />
         </div>
-    </AuthLayout>
+
+        <div class="text-center text-sm text-muted">
+            Already have an account?
+            <TextLink :href="login()" :tabindex="6">Log in</TextLink>
+        </div>
+    </Form>
 </template>

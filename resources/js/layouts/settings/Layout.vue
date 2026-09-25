@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { edit as editAppearance } from '@/routes/appearance';
+import { edit as editProfile } from '@/routes/profile';
+import { edit as editSecurity } from '@/routes/security';
 import type { NavigationMenuItem } from '@nuxt/ui';
 
 const links = [
@@ -6,17 +9,17 @@ const links = [
         {
             label: 'Profile',
             icon: 'i-lucide-user',
-            to: '/settings/profile',
+            to: editProfile().url,
         },
         {
-            label: 'Password',
+            label: 'Security',
             icon: 'i-lucide-shield',
-            to: '/settings/password',
+            to: editSecurity().url,
         },
         {
             label: 'Appearance',
             icon: 'i-lucide-cloud-sun',
-            to: '/settings/appearance',
+            to: editAppearance().url,
         },
     ],
     [

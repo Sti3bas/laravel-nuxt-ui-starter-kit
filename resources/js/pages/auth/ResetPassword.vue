@@ -1,64 +1,61 @@
 <script setup lang="ts">
-import PasswordInput from '@/components/form/PasswordInput.vue';
-import AuthLayout from '@/layouts/AuthLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import PasswordInput from '@/components/PasswordInput.vue';
+import { Form, Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { update } from '@/routes/password';
 
-interface Props {
-    token: string;
-    email: string;
-}
-
-const props = defineProps<Props>();
-
-const form = useForm({
-    token: props.token,
-    email: props.email,
-    password: '',
-    password_confirmation: '',
+defineOptions({
+    layout: {
+        title: 'Reset password',
+        description: 'Please enter your new password below',
+    },
 });
 
-const submit = () => {
-    form.post(route('password.store'), {
-        onFinish: () => {
-            form.reset('password', 'password_confirmation');
-        },
-    });
-};
+const props = defineProps<{
+    token: string;
+    email: string;
+    passwordRules: string;
+}>();
+
+const inputEmail = ref(props.email);
 </script>
 
 <template>
-    <AuthLayout title="Reset password" description="Please enter your new password below">
-        <Head title="Reset password" />
+    <Head title="Reset password" />
 
-        <UForm :state="form" @submit.prevent="submit" class="w-full space-y-4">
-            <UFormField label="Email" name="email" :error="form.errors.email">
-                <UInput type="email" class="w-full" autocomplete="email" v-model="form.email" readonly />
+    <Form
+        v-bind="update.form()"
+        :transform="(data) => ({ ...data, token, email })"
+        :reset-on-success="['password', 'password_confirmation']"
+        v-slot="{ errors, processing }"
+    >
+        <div class="grid gap-4">
+            <UFormField label="Email" name="email" :error="errors.email">
+                <UInput id="email" type="email" name="email" autocomplete="email" v-model="inputEmail" class="w-full" readonly />
             </UFormField>
 
-            <UFormField label="Password" name="password" :error="form.errors.password">
+            <UFormField label="Password" name="password" :error="errors.password">
                 <PasswordInput
-                    :tabindex="1"
-                    v-model="form.password"
-                    class="w-full"
+                    name="password"
                     autocomplete="new-password"
-                    placeholder="Password"
+                    class="w-full"
                     autofocus
-                    required
+                    placeholder="Password"
+                    :passwordrules="passwordRules"
                 />
             </UFormField>
 
-            <UFormField label="Confirm password" name="password_confirmation" :error="form.errors.password_confirmation">
+            <UFormField label="Confirm password" name="password_confirmation" :error="errors.password_confirmation">
                 <PasswordInput
-                    :tabindex="3"
-                    v-model="form.password_confirmation"
-                    class="w-full"
+                    name="password_confirmation"
                     autocomplete="new-password"
+                    class="w-full"
                     placeholder="Confirm password"
-                    required
+                    :passwordrules="passwordRules"
                 />
             </UFormField>
 
-            <UButton type="submit" :tabindex="5" label="Reset password" :loading="form.processing" block />
-        </UForm>
-    </AuthLayout>
+            <UButton type="submit" label="Reset password" class="mt-2" block :loading="processing" data-test="reset-password-button" />
+        </div>
+    </Form>
 </template>

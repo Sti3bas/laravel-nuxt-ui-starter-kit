@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { User } from '@/types';
-import { router, useForm } from '@inertiajs/vue3';
+import { edit as editProfile } from '@/routes/profile';
+import { logout } from '@/routes';
+import { router } from '@inertiajs/vue3';
 import type { DropdownMenuItem } from '@nuxt/ui';
 import { computed, ref } from 'vue';
 
@@ -19,10 +21,8 @@ const user = ref({
     },
 });
 
-const logoutForm = useForm({});
-
 const handleLogout = () => {
-    logoutForm.post(route('logout'));
+    router.post(logout().url);
 
     router.flushAll();
 };
@@ -39,7 +39,7 @@ const items = computed<DropdownMenuItem[][]>(() => [
         {
             label: 'Settings',
             icon: 'i-lucide-settings',
-            to: '/settings',
+            to: editProfile().url,
         },
     ],
 

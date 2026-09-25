@@ -1,3 +1,5 @@
+import inertia from '@inertiajs/vite';
+import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import ui from '@nuxt/ui/vite';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
@@ -7,10 +9,10 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.ts'],
-            ssr: 'resources/js/ssr.ts',
+            input: ['resources/css/app.css', 'resources/js/app.ts'],
             refresh: true,
         }),
+        inertia(),
         tailwindcss(),
         vue({
             template: {
@@ -33,5 +35,13 @@ export default defineConfig({
                 },
             },
         }),
+        wayfinder({
+            formVariants: true,
+        }),
     ],
+    server: {
+        watch: {
+            ignored: ['**/vendor/**'],
+        },
+    },
 });

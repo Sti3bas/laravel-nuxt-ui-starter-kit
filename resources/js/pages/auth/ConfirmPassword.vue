@@ -1,38 +1,42 @@
 <script setup lang="ts">
-import AuthLayout from '@/layouts/AuthLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import PasswordInput from '@/components/PasswordInput.vue';
+import { Form, Head } from '@inertiajs/vue3';
+import { store } from '@/routes/password/confirm';
+/* @chisel-passkeys */
+import { index as confirmOptions, store as confirmStore } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController';
+import PasskeyVerify from '@/components/PasskeyVerify.vue';
+/* @end-chisel-passkeys */
 
-const form = useForm({
-    password: '',
+defineOptions({
+    layout: {
+        title: 'Confirm password',
+        description: 'This is a secure area of the application. Please confirm your password before continuing.',
+    },
 });
-
-const submit = () => {
-    form.post(route('password.confirm'), {
-        onFinish: () => {
-            form.reset();
-        },
-    });
-};
 </script>
 
 <template>
-    <AuthLayout title="Confirm your password" description="This is a secure area of the application. Please confirm your password before continuing.">
-        <Head title="Confirm password" />
+    <Head title="Confirm password" />
 
-        <UForm :state="form" @submit.prevent="submit" class="w-full space-y-4">
-            <UFormField label="Password" name="password" :error="form.errors.password">
-                <UInput
-                    type="password"
-                    class="w-full"
-                    autocomplete="current-password"
-                    placeholder="Password"
-                    v-model="form.password"
-                    autofocus
-                    required
-                />
+    <!-- @chisel-passkeys -->
+    <PasskeyVerify
+        :routes="{
+            options: confirmOptions(),
+            submit: confirmStore(),
+        }"
+        label="Confirm with passkey"
+        loading-label="Confirming..."
+        separator="Or confirm with password"
+    />
+    <!-- @end-chisel-passkeys -->
+
+    <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }">
+        <div class="space-y-6">
+            <UFormField label="Password" name="password" :error="errors.password">
+                <PasswordInput name="password" class="w-full" required autocomplete="current-password" autofocus />
             </UFormField>
 
-            <UButton type="submit" label="Confirm password" :tabindex="4" :loading="form.processing" block />
-        </UForm>
-    </AuthLayout>
+            <UButton type="submit" label="Confirm password" block :loading="processing" data-test="confirm-password-button" />
+        </div>
+    </Form>
 </template>
