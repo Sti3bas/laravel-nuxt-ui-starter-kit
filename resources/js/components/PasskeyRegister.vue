@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import { useI18n } from '@/composables/useI18n';
 import { usePasskeyRegister } from '@laravel/passkeys/vue';
 import { ref } from 'vue';
+
+const { t } = useI18n();
 
 const emit = defineEmits<{
     success: [];
@@ -62,20 +65,20 @@ const handleCancel = () => {
 </script>
 
 <template>
-    <div v-if="!isSupported" class="text-sm text-muted">Passkeys are not supported in this browser.</div>
+    <div v-if="!isSupported" class="text-sm text-muted">{{ t('Passkeys are not supported in this browser.') }}</div>
 
-    <UButton v-else-if="!showForm" label="Add passkey" color="neutral" variant="outline" icon="i-lucide-plus" @click="openForm" />
+    <UButton v-else-if="!showForm" :label="t('Add passkey')" color="neutral" variant="outline" icon="i-lucide-plus" @click="openForm" />
 
     <form v-else @submit="handleSubmit" class="space-y-4 rounded-lg border border-default bg-elevated/50 p-4">
-        <UFormField label="Passkey name" name="passkey-name" description="A name helps you identify this passkey later.">
-            <UInput id="passkey-name" type="text" v-model="name" placeholder="e.g., MacBook Pro, iPhone" class="w-full" v-focus />
+        <UFormField :label="t('Passkey name')" name="passkey-name" :description="t('A name helps you identify this passkey later.')">
+            <UInput id="passkey-name" type="text" v-model="name" :placeholder="t('e.g., MacBook Pro, iPhone')" class="w-full" v-focus />
         </UFormField>
 
         <InputError v-if="error" :message="error" />
 
         <div class="flex gap-2">
-            <UButton type="submit" :label="isLoading ? 'Registering...' : 'Register passkey'" :loading="isLoading" :disabled="!name.trim()" />
-            <UButton type="button" label="Cancel" color="neutral" variant="ghost" @click="handleCancel" />
+            <UButton type="submit" :label="isLoading ? t('Registering...') : t('Register passkey')" :loading="isLoading" :disabled="!name.trim()" />
+            <UButton type="button" :label="t('Cancel')" color="neutral" variant="ghost" @click="handleCancel" />
         </div>
     </form>
 </template>

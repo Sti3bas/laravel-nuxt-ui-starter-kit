@@ -1,42 +1,46 @@
 <script setup lang="ts">
+import { useI18n } from '@/composables/useI18n';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit as editProfile } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import type { NavigationMenuItem } from '@nuxt/ui';
+import { computed } from 'vue';
 
-const links = [
+const { t } = useI18n();
+
+const links = computed<NavigationMenuItem[][]>(() => [
     [
         {
-            label: 'Profile',
+            label: t('Profile'),
             icon: 'i-lucide-user',
             to: editProfile().url,
         },
         {
-            label: 'Security',
+            label: t('Security'),
             icon: 'i-lucide-shield',
             to: editSecurity().url,
         },
         {
-            label: 'Appearance',
+            label: t('Appearance'),
             icon: 'i-lucide-cloud-sun',
             to: editAppearance().url,
         },
     ],
     [
         {
-            label: 'Documentation',
+            label: t('Documentation'),
             icon: 'i-lucide-book-open',
             to: 'https://ui.nuxt.com/getting-started/installation/pro/nuxt',
             target: '_blank',
         },
     ],
-] satisfies NavigationMenuItem[][];
+]);
 </script>
 
 <template>
     <UDashboardPanel id="settings" :ui="{ body: 'lg:py-12' }">
         <template #header>
-            <UDashboardNavbar title="Settings">
+            <UDashboardNavbar :title="t('Settings')">
                 <template #leading>
                     <UDashboardSidebarCollapse />
                 </template>

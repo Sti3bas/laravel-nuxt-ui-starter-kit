@@ -3,6 +3,7 @@ import { Form, Head } from '@inertiajs/vue3';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import Heading from '@/components/Heading.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
+import { useI18n } from '@/composables/useI18n';
 /* @chisel-passkeys */
 import type { Props as ManagePasskeysProps } from '@/components/ManagePasskeys.vue';
 import ManagePasskeys from '@/components/ManagePasskeys.vue';
@@ -19,12 +20,13 @@ type Props = {
     ManageTwoFactorProps /* @end-chisel-2fa */;
 
 const props = defineProps<Props>();
+const { t } = useI18n();
 </script>
 
 <template>
-    <Head title="Security settings" />
+    <Head :title="t('Security settings')" />
 
-    <h1 class="sr-only">Security settings</h1>
+    <h1 class="sr-only">{{ t('Security settings') }}</h1>
 
     <div class="space-y-6">
         <Heading variant="small" title="Update password" description="Ensure your account is using a long, random password to stay secure" />
@@ -38,32 +40,32 @@ const props = defineProps<Props>();
             v-slot="{ errors, processing }"
         >
             <div class="grid gap-4">
-                <UFormField label="Current password" name="current_password" :error="errors.current_password">
-                    <PasswordInput name="current_password" class="w-full" autocomplete="current-password" placeholder="Current password" />
+                <UFormField :label="t('Current password')" name="current_password" :error="errors.current_password">
+                    <PasswordInput name="current_password" class="w-full" autocomplete="current-password" :placeholder="t('Current password')" />
                 </UFormField>
 
-                <UFormField label="New password" name="password" :error="errors.password">
+                <UFormField :label="t('New password')" name="password" :error="errors.password">
                     <PasswordInput
                         name="password"
                         class="w-full"
                         autocomplete="new-password"
-                        placeholder="New password"
+                        :placeholder="t('New password')"
                         :passwordrules="props.passwordRules"
                     />
                 </UFormField>
 
-                <UFormField label="Confirm password" name="password_confirmation" :error="errors.password_confirmation">
+                <UFormField :label="t('Confirm password')" name="password_confirmation" :error="errors.password_confirmation">
                     <PasswordInput
                         name="password_confirmation"
                         class="w-full"
                         autocomplete="new-password"
-                        placeholder="Confirm password"
+                        :placeholder="t('Confirm password')"
                         :passwordrules="props.passwordRules"
                     />
                 </UFormField>
 
                 <div class="flex items-center gap-4">
-                    <UButton type="submit" label="Save" :loading="processing" data-test="update-password-button" />
+                    <UButton type="submit" :label="t('Save')" :loading="processing" data-test="update-password-button" />
                 </div>
             </div>
         </Form>

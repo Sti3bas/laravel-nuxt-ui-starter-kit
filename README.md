@@ -23,6 +23,7 @@ This starter kit is based on [laravel/vue-starter-kit](https://github.com/larave
 - Two-factor authentication (TOTP) with recovery codes
 - Passkeys (WebAuthn) for passwordless sign-in
 - Fully typed [Wayfinder](https://github.com/laravel/wayfinder) route functions for the frontend
+- Internationalization (i18n) with [vue-i18n](https://vue-i18n.intlify.dev) backed by Laravel's native `lang/*.json` translations
 - Inertia `<Form>` components and server-side rendering (SSR)
 - Interactive feature selection on install (registration, email verification, 2FA, passkeys, password confirmation)
 - Dashboard page
@@ -49,6 +50,16 @@ Create a new Laravel application using the official [Laravel Installer](https://
 ```bash
 laravel new my-app --using=sti3bas/laravel-nuxt-ui-starter-kit
 ```
+
+## Localization
+
+The UI is translated with [vue-i18n](https://vue-i18n.intlify.dev) — the integration path documented by [Nuxt UI](https://ui.nuxt.com/docs/getting-started/integrations/i18n/vue) — backed by Laravel's native JSON translations, so `lang/*.json` files are shared between PHP `__()`/`trans()` and Vue `t()` calls. Nuxt UI's component translations follow the active locale via `UApp :locale` automatically.
+
+- Translations live in `lang/{locale}.json`. English strings are the keys and are used as the fallback, so `lang/en.json` is optional.
+- Supported locales are listed in `config/app.php` under `locales`. The active locale is detected from the `Accept-Language` header and can be changed in **Settings → Appearance**.
+- To add a language, create `lang/{locale}.json`, add the code to `app.locales`, and add the matching `@nuxt/ui/locale` import to `useI18n.ts`.
+- Interpolation uses vue-i18n's `{name}` syntax, e.g. `t('Added {time}', { time })`.
+- For framework messages (validation, auth), publish or download language files per [Laravel's docs](https://laravel.com/docs/localization).
 
 ## Screenshots
 

@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useI18n } from '@/composables/useI18n';
 import { ref, useTemplateRef } from 'vue';
 import type { HTMLAttributes } from 'vue';
+
+const { t } = useI18n();
 
 defineOptions({ inheritAttrs: false });
 
@@ -36,7 +39,7 @@ defineExpose({
                 size="sm"
                 :tabindex="-1"
                 :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                :aria-label="showPassword ? t('Hide password') : t('Show password')"
                 :aria-pressed="showPassword"
                 @click="showPassword = !showPassword"
             />

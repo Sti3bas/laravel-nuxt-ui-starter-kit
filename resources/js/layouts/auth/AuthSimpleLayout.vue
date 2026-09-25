@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import { useI18n } from '@/composables/useI18n';
 import { home } from '@/routes';
+
+const { t } = useI18n();
 
 defineProps<{
     title?: string;
@@ -17,12 +20,12 @@ defineProps<{
                         <div class="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
                             <AppLogoIcon class="size-9 fill-current" />
                         </div>
-                        <span class="sr-only">{{ title }}</span>
+                        <span class="sr-only">{{ t(title || '') }}</span>
                     </ULink>
                     <div class="space-y-2 text-center">
-                        <h1 class="text-xl font-medium text-highlighted">{{ title }}</h1>
+                        <h1 class="text-xl font-medium text-highlighted">{{ t(title || '') }}</h1>
                         <p class="text-center text-sm text-muted">
-                            {{ description }}
+                            {{ t(description || '') }}
                         </p>
                     </div>
                 </div>

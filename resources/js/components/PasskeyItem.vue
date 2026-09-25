@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useI18n } from '@/composables/useI18n';
 import type { Passkey } from '@/types/auth';
 import { ref } from 'vue';
+
+const { t } = useI18n();
 
 const props = defineProps<{
     passkey: Passkey;
@@ -33,10 +36,10 @@ const handleDelete = () => {
                     <UBadge v-if="passkey.authenticator" color="neutral" variant="subtle" size="sm" :label="passkey.authenticator" />
                 </div>
                 <p class="text-sm text-muted">
-                    Added {{ passkey.created_at_diff }}
+                    {{ t('Added {time}', { time: passkey.created_at_diff }) }}
                     <template v-if="passkey.last_used_at_diff">
                         <span class="mx-1 text-dimmed">/</span>
-                        Last used {{ passkey.last_used_at_diff }}
+                        {{ t('Last used {time}', { time: passkey.last_used_at_diff }) }}
                     </template>
                 </p>
             </div>
@@ -44,15 +47,19 @@ const handleDelete = () => {
 
         <UModal
             v-model:open="open"
-            title="Remove passkey"
-            :description="`Are you sure you want to remove the &quot;${passkey.name}&quot; passkey? You will no longer be able to use it to sign in.`"
+            :title="t('Remove passkey')"
+            :description="
+                t('Are you sure you want to remove the {name} passkey? You will no longer be able to use it to sign in.', {
+                    name: `&quot;${passkey.name}&quot;`,
+                })
+            "
             :ui="{ footer: 'justify-end' }"
         >
-            <UButton icon="i-lucide-trash-2" color="error" variant="ghost" size="sm" aria-label="Remove" />
+            <UButton icon="i-lucide-trash-2" color="error" variant="ghost" size="sm" :aria-label="t('Remove')" />
 
             <template #footer="{ close }">
-                <UButton label="Cancel" color="neutral" variant="outline" @click="close" />
-                <UButton color="error" :label="isDeleting ? 'Removing...' : 'Remove passkey'" :loading="isDeleting" @click="handleDelete" />
+                <UButton :label="t('Cancel')" color="neutral" variant="outline" @click="close" />
+                <UButton color="error" :label="isDeleting ? t('Removing...') : t('Remove passkey')" :loading="isDeleting" @click="handleDelete" />
             </template>
         </UModal>
     </div>
