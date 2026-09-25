@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { useI18n } from '@/composables/useI18n';
 import { Head } from '@inertiajs/vue3';
+
+const { t } = useI18n();
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head :title="t('Dashboard')" />
 
     <UDashboardPanel id="home">
         <template #header>
-            <UDashboardNavbar title="Dashboard" :ui="{ right: 'gap-3' }">
+            <UDashboardNavbar :title="t('Dashboard')" :ui="{ right: 'gap-3' }">
                 <template #leading>
                     <UDashboardSidebarCollapse />
                 </template>

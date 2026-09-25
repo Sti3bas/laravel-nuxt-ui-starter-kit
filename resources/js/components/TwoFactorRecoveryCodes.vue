@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import AlertError from '@/components/AlertError.vue';
+import { useI18n } from '@/composables/useI18n';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
 import { Form } from '@inertiajs/vue3';
 import { nextTick, onMounted, ref, useTemplateRef } from 'vue';
 
 const { recoveryCodesList, fetchRecoveryCodes, errors } = useTwoFactorAuth();
+const { t } = useI18n();
 const isRecoveryCodesVisible = ref<boolean>(false);
 const recoveryCodeSectionRef = useTemplateRef('recoveryCodeSectionRef');
 
@@ -34,17 +36,17 @@ onMounted(async () => {
         <template #header>
             <div class="flex items-center gap-3 font-medium">
                 <UIcon name="i-lucide-lock-keyhole" class="size-4" />
-                2FA recovery codes
+                {{ t('2FA recovery codes') }}
             </div>
             <p class="mt-1 text-sm text-muted">
-                Recovery codes let you regain access if you lose your 2FA device. Store them in a secure password manager.
+                {{ t('Recovery codes let you regain access if you lose your 2FA device. Store them in a secure password manager.') }}
             </p>
         </template>
 
         <div class="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between">
             <UButton
                 :icon="isRecoveryCodesVisible ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                :label="`${isRecoveryCodesVisible ? 'Hide' : 'View'} recovery codes`"
+                :label="isRecoveryCodesVisible ? t('Hide recovery codes') : t('View recovery codes')"
                 color="neutral"
                 variant="outline"
                 class="w-fit"
@@ -58,7 +60,14 @@ onMounted(async () => {
                 @success="fetchRecoveryCodes"
                 #default="{ processing }"
             >
-                <UButton type="submit" color="neutral" variant="subtle" icon="i-lucide-refresh-cw" label="Regenerate codes" :loading="processing" />
+                <UButton
+                    type="submit"
+                    color="neutral"
+                    variant="subtle"
+                    icon="i-lucide-refresh-cw"
+                    :label="t('Regenerate codes')"
+                    :loading="processing"
+                />
             </Form>
         </div>
 
@@ -76,8 +85,11 @@ onMounted(async () => {
                     </div>
                 </div>
                 <p class="text-xs text-muted select-none">
-                    Each recovery code can be used once to access your account and will be removed after use. If you need more, click
-                    <span class="font-bold">Regenerate codes</span> above.
+                    {{
+                        t(
+                            'Each recovery code can be used once to access your account and will be removed after use. If you need more, click Regenerate codes above.',
+                        )
+                    }}
                 </p>
             </div>
         </div>

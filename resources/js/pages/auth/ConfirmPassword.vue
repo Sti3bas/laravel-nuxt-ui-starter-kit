@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PasswordInput from '@/components/PasswordInput.vue';
+import { useI18n } from '@/composables/useI18n';
 import { Form, Head } from '@inertiajs/vue3';
 import { store } from '@/routes/password/confirm';
 /* @chisel-passkeys */
@@ -13,10 +14,12 @@ defineOptions({
         description: 'This is a secure area of the application. Please confirm your password before continuing.',
     },
 });
+
+const { t } = useI18n();
 </script>
 
 <template>
-    <Head title="Confirm password" />
+    <Head :title="t('Confirm password')" />
 
     <!-- @chisel-passkeys -->
     <PasskeyVerify
@@ -24,19 +27,19 @@ defineOptions({
             options: confirmOptions(),
             submit: confirmStore(),
         }"
-        label="Confirm with passkey"
-        loading-label="Confirming..."
-        separator="Or confirm with password"
+        :label="t('Confirm with passkey')"
+        :loading-label="t('Confirming...')"
+        :separator="t('Or confirm with password')"
     />
     <!-- @end-chisel-passkeys -->
 
     <Form v-bind="store.form()" reset-on-success v-slot="{ errors, processing }">
         <div class="space-y-6">
-            <UFormField label="Password" name="password" :error="errors.password">
+            <UFormField :label="t('Password')" name="password" :error="errors.password">
                 <PasswordInput name="password" class="w-full" required autocomplete="current-password" autofocus />
             </UFormField>
 
-            <UButton type="submit" label="Confirm password" block :loading="processing" data-test="confirm-password-button" />
+            <UButton type="submit" :label="t('Confirm password')" block :loading="processing" data-test="confirm-password-button" />
         </div>
     </Form>
 </template>

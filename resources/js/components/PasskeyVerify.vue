@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import { useI18n } from '@/composables/useI18n';
 import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/vue3';
 import { usePasskeyVerify } from '@laravel/passkeys/vue';
+
+const { t } = useI18n();
 
 type Props = {
     routes?: {
@@ -40,7 +43,7 @@ const { verify, isLoading, error, isSupported } = usePasskeyVerify({
                 variant="outline"
                 block
                 icon="i-lucide-key-round"
-                :label="isLoading ? (props.loadingLabel ?? 'Authenticating...') : (props.label ?? 'Sign in with a passkey')"
+                :label="isLoading ? (props.loadingLabel ?? t('Authenticating...')) : (props.label ?? t('Sign in with a passkey'))"
                 :loading="isLoading"
                 @click="verify"
             />
@@ -50,6 +53,6 @@ const { verify, isLoading, error, isSupported } = usePasskeyVerify({
             </div>
         </div>
 
-        <USeparator :label="props.separator ?? 'Or continue with email'" class="my-6" />
+        <USeparator :label="props.separator ?? t('Or continue with email')" class="my-6" />
     </div>
 </template>

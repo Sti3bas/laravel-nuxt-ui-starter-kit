@@ -11,7 +11,10 @@ declare module 'vite/client' {
 
     interface ImportMeta {
         readonly env: ImportMetaEnv;
-        readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
+        readonly glob: {
+            <T>(pattern: string): Record<string, () => Promise<T>>;
+            <T>(pattern: string, options: { eager: true; import?: string }): Record<string, T>;
+        };
     }
 }
 
@@ -21,6 +24,8 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            locale: string;
+            locales: string[];
             [key: string]: unknown;
         };
     }

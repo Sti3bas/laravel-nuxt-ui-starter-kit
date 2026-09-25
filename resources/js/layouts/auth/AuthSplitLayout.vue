@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import { useI18n } from '@/composables/useI18n';
 import { home } from '@/routes';
 import { usePage } from '@inertiajs/vue3';
 
+const { t } = useI18n();
 const page = usePage();
 const name = page.props.name;
 
@@ -24,10 +26,10 @@ defineProps<{
             <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
                 <div class="flex flex-col space-y-2 text-center">
                     <h1 class="text-xl font-medium tracking-tight text-highlighted" v-if="title">
-                        {{ title }}
+                        {{ t(title) }}
                     </h1>
                     <p class="text-sm text-muted" v-if="description">
-                        {{ description }}
+                        {{ t(description) }}
                     </p>
                 </div>
                 <slot />

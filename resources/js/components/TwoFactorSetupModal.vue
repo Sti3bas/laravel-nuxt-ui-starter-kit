@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AlertError from '@/components/AlertError.vue';
 import InputError from '@/components/InputError.vue';
+import { useI18n } from '@/composables/useI18n';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import { confirm } from '@/routes/two-factor';
 import type { TwoFactorConfigContent } from '@/types';
@@ -17,6 +18,7 @@ const props = defineProps<Props>();
 const isOpen = defineModel<boolean>('open');
 
 const isDark = useDark();
+const { t } = useI18n();
 const { copy, copied } = useClipboard();
 const { qrCodeSvg, manualSetupKey, clearSetupData, fetchSetupData, errors } = useTwoFactorAuth();
 
@@ -28,24 +30,24 @@ const pinInputContainerRef = useTemplateRef('pinInputContainerRef');
 const modalConfig = computed<TwoFactorConfigContent>(() => {
     if (props.twoFactorEnabled) {
         return {
-            title: 'Two-factor authentication enabled',
-            description: 'Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.',
-            buttonText: 'Close',
+            title: t('Two-factor authentication enabled'),
+            description: t('Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.'),
+            buttonText: t('Close'),
         };
     }
 
     if (showVerificationStep.value) {
         return {
-            title: 'Verify authentication code',
-            description: 'Enter the 6-digit code from your authenticator app',
-            buttonText: 'Continue',
+            title: t('Verify authentication code'),
+            description: t('Enter the 6-digit code from your authenticator app'),
+            buttonText: t('Continue'),
         };
     }
 
     return {
-        title: 'Enable two-factor authentication',
-        description: 'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app',
-        buttonText: 'Continue',
+        title: t('Enable two-factor authentication'),
+        description: t('To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app'),
+        buttonText: t('Continue'),
     };
 });
 
@@ -107,7 +109,7 @@ watch(isOpen, async (open) => {
 
                         <UButton :label="modalConfig.buttonText" block @click="handleModalNextStep" />
 
-                        <USeparator label="or, enter the code manually" />
+                        <USeparator :label="t('or, enter the code manually')" />
 
                         <div class="flex w-full items-stretch overflow-hidden rounded-xl border border-default">
                             <div v-if="!manualSetupKey" class="flex h-full w-full items-center justify-center bg-elevated p-3">
@@ -145,14 +147,14 @@ watch(isOpen, async (open) => {
 
                             <div class="flex w-full items-center gap-3">
                                 <UButton
-                                    label="Back"
+                                    :label="t('Back')"
                                     color="neutral"
                                     variant="outline"
                                     class="flex-1"
                                     :disabled="processing"
                                     @click="showVerificationStep = false"
                                 />
-                                <UButton label="Confirm" type="submit" class="flex-1" :loading="processing" :disabled="code.length < 6" />
+                                <UButton :label="t('Confirm')" type="submit" class="flex-1" :loading="processing" :disabled="code.length < 6" />
                             </div>
                         </div>
                     </Form>

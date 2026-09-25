@@ -5,6 +5,9 @@ import { logout } from '@/routes';
 import { router } from '@inertiajs/vue3';
 import type { DropdownMenuItem } from '@nuxt/ui';
 import { computed, ref } from 'vue';
+import { useI18n } from '@/composables/useI18n';
+
+const { t } = useI18n();
 
 interface Props {
     user: User;
@@ -37,7 +40,7 @@ const items = computed<DropdownMenuItem[][]>(() => [
     ],
     [
         {
-            label: 'Settings',
+            label: t('Settings'),
             icon: 'i-lucide-settings',
             to: editProfile().url,
         },
@@ -45,7 +48,7 @@ const items = computed<DropdownMenuItem[][]>(() => [
 
     [
         {
-            label: 'Log out',
+            label: t('Log out'),
             icon: 'i-lucide-log-out',
             onSelect: handleLogout,
         },

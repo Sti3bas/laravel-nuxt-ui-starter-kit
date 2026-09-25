@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
+import { useI18n } from '@/composables/useI18n';
 import { Head } from '@inertiajs/vue3';
 import { dashboard, login } from '@/routes';
 /* @chisel-registration */
 import { register } from '@/routes';
 /* @end-chisel-registration */
+
+const { t } = useI18n();
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head :title="t('Welcome')" />
 
     <UHeader>
         <template #left>
@@ -22,7 +25,7 @@ import { register } from '@/routes';
 
             <UButton
                 v-if="$page.props.auth.user"
-                label="Dashboard"
+                :label="t('Dashboard')"
                 color="neutral"
                 variant="outline"
                 class="hidden lg:inline-flex"
@@ -30,23 +33,29 @@ import { register } from '@/routes';
             />
 
             <template v-else>
-                <UButton icon="i-lucide-log-in" color="neutral" variant="ghost" :to="login().url" class="lg:hidden" />
+                <UButton icon="i-lucide-log-in" color="neutral" variant="ghost" :to="login().url" :aria-label="t('Log in')" class="lg:hidden" />
 
-                <UButton label="Log in" color="neutral" variant="outline" :to="login().url" class="hidden lg:inline-flex" />
+                <UButton :label="t('Log in')" color="neutral" variant="outline" :to="login().url" class="hidden lg:inline-flex" />
 
                 <!-- @chisel-registration -->
-                <UButton label="Register" color="neutral" trailing-icon="i-lucide-arrow-right" class="hidden lg:inline-flex" :to="register().url" />
+                <UButton
+                    :label="t('Register')"
+                    color="neutral"
+                    trailing-icon="i-lucide-arrow-right"
+                    class="hidden lg:inline-flex"
+                    :to="register().url"
+                />
                 <!-- @end-chisel-registration -->
             </template>
         </template>
 
         <template #body>
-            <UButton v-if="$page.props.auth.user" label="Dashboard" color="neutral" variant="outline" block :to="dashboard().url" />
+            <UButton v-if="$page.props.auth.user" :label="t('Dashboard')" color="neutral" variant="outline" block :to="dashboard().url" />
 
             <template v-else>
-                <UButton label="Log in" color="neutral" variant="subtle" :to="login().url" block class="mb-3" />
+                <UButton :label="t('Log in')" color="neutral" variant="subtle" :to="login().url" block class="mb-3" />
                 <!-- @chisel-registration -->
-                <UButton label="Register" color="neutral" :to="register().url" block />
+                <UButton :label="t('Register')" color="neutral" :to="register().url" block />
                 <!-- @end-chisel-registration -->
             </template>
         </template>
@@ -60,25 +69,25 @@ import { register } from '@/routes';
                         <div class="flex flex-1 flex-col justify-center p-4 sm:p-6">
                             <div>
                                 <div>
-                                    <div class="text-base font-semibold text-pretty text-highlighted">Let's get started</div>
+                                    <div class="text-base font-semibold text-pretty text-highlighted">{{ t("Let's get started") }}</div>
 
-                                    <div class="mt-1 text-[15px] text-pretty text-muted">Laravel has an incredibly rich ecosystem.</div>
+                                    <div class="mt-1 text-[15px] text-pretty text-muted">{{ t('Laravel has an incredibly rich ecosystem.') }}</div>
                                 </div>
 
                                 <UTimeline
                                     :items="[
                                         {
-                                            title: 'Read Laravel documentation',
+                                            title: t('Read Laravel documentation'),
                                             icon: 'i-lucide-circle-dot',
                                             link: 'https://laravel.com/docs',
                                         },
                                         {
-                                            title: 'Read Nuxt UI documentation',
+                                            title: t('Read Nuxt UI documentation'),
                                             icon: 'i-lucide-circle-dot',
                                             link: 'https://ui.nuxt.com/getting-started',
                                         },
                                         {
-                                            title: 'Watch video tutorials at Laracasts',
+                                            title: t('Watch video tutorials at Laracasts'),
                                             icon: 'i-lucide-circle-dot',
                                             link: 'https://laracasts.com',
                                         },
@@ -97,7 +106,7 @@ import { register } from '@/routes';
                                 </UTimeline>
 
                                 <div class="mt-6">
-                                    <UButton label="Deploy now" color="neutral" to="https://cloud.laravel.com" />
+                                    <UButton :label="t('Deploy now')" color="neutral" to="https://cloud.laravel.com" />
                                 </div>
                             </div>
                         </div>

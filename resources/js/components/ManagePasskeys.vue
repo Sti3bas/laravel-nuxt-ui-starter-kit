@@ -3,8 +3,11 @@ import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegi
 import Heading from '@/components/Heading.vue';
 import PasskeyItem from '@/components/PasskeyItem.vue';
 import PasskeyRegister from '@/components/PasskeyRegister.vue';
+import { useI18n } from '@/composables/useI18n';
 import type { Passkey } from '@/types/auth';
 import { router } from '@inertiajs/vue3';
+
+const { t } = useI18n();
 
 export type Props = {
     canManagePasskeys?: boolean;
@@ -41,8 +44,8 @@ const handleRegisterSuccess = () => {
                 <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-elevated">
                     <UIcon name="i-lucide-key-round" class="h-7 w-7 text-muted" />
                 </div>
-                <p class="font-medium text-highlighted">No passkeys yet</p>
-                <p class="mt-1 text-sm text-muted">Add a passkey to sign in without a password</p>
+                <p class="font-medium text-highlighted">{{ t('No passkeys yet') }}</p>
+                <p class="mt-1 text-sm text-muted">{{ t('Add a passkey to sign in without a password') }}</p>
             </div>
         </div>
 

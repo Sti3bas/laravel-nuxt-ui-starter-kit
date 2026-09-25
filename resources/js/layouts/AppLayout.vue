@@ -6,20 +6,22 @@ import { edit as editAppearance } from '@/routes/appearance';
 import { edit as editProfile } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import { dashboard } from '@/routes';
+import { useI18n } from '@/composables/useI18n';
 import { usePage } from '@inertiajs/vue3';
 import type { NavigationMenuItem } from '@nuxt/ui';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const page = usePage();
 const user = page.props.auth.user;
+const { t, uiLocale } = useI18n();
 
 const isOpen = ref(false);
 const isCollapsed = ref(!page.props.sidebarOpen);
 
-const links = [
+const links = computed<NavigationMenuItem[][]>(() => [
     [
         {
-            label: 'Dashboard',
+            label: t('Dashboard'),
             icon: 'i-lucide-house',
             to: dashboard().url,
             onSelect: () => {
@@ -27,28 +29,28 @@ const links = [
             },
         },
         {
-            label: 'Settings',
+            label: t('Settings'),
             to: editProfile().url,
             icon: 'i-lucide-settings',
             defaultOpen: true,
             type: 'trigger',
             children: [
                 {
-                    label: 'Profile',
+                    label: t('Profile'),
                     to: editProfile().url,
                     onSelect: () => {
                         isOpen.value = false;
                     },
                 },
                 {
-                    label: 'Security',
+                    label: t('Security'),
                     to: editSecurity().url,
                     onSelect: () => {
                         isOpen.value = false;
                     },
                 },
                 {
-                    label: 'Appearance',
+                    label: t('Appearance'),
                     to: editAppearance().url,
                     onSelect: () => {
                         isOpen.value = false;
@@ -59,13 +61,13 @@ const links = [
     ],
     [
         {
-            label: 'Repository',
+            label: t('Repository'),
             icon: 'i-simple-icons:github',
             to: 'https://github.com/Sti3bas/laravel-nuxt-ui-starter-kit',
             target: '_blank',
         },
     ],
-] satisfies NavigationMenuItem[][];
+]);
 
 watch(
     () => isCollapsed.value,
@@ -76,7 +78,7 @@ watch(
 </script>
 
 <template>
-    <UApp>
+    <UApp :locale="uiLocale">
         <FlashToasts />
 
         <UDashboardGroup unit="rem" :persistent="false">
