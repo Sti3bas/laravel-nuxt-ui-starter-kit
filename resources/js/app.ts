@@ -5,8 +5,16 @@ import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import ui from '@nuxt/ui/vue-plugin';
+import { createI18n } from 'vue-i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+const messages = Object.fromEntries(
+    Object.entries(import.meta.glob<Record<string, string>>('../../lang/*.json', { eager: true, import: 'default' })).map(([path, catalog]) => [
+        /([^/]+)\.json$/.exec(path)?.[1] ?? 'en',
+        catalog,
+    ]),
+);
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
@@ -23,7 +31,7 @@ void createInertiaApp({
                 return AppLayout;
         }
     },
-    withApp(app, { ssr }) {
+    withApp(app, { ssr, page }) {
         app.directive('focus', {
             mounted: (el: HTMLElement, shouldFocus) => {
                 if (shouldFocus.value !== false) {
@@ -31,6 +39,20 @@ void createInertiaApp({
                 }
             },
         });
+
+        app.use(
+            createI18n({
+                legacy: false,
+                locale: (page.props.locale as string) ?? 'en',
+                fallbackLocale: 'en',
+                messages,
+                missingWarn: false,
+                fallbackWarn: false,
+                // Laravel JSON translations use whole strings as keys, so
+                // resolve keys directly instead of vue-i18n's dot notation.
+                messageResolver: (obj, path) => (obj as Record<string, string>)[path] ?? path,
+            }),
+        );
 
         if (!ssr) {
             app.use(ui);

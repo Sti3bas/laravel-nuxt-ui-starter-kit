@@ -36,10 +36,10 @@ const handleDelete = () => {
                     <UBadge v-if="passkey.authenticator" color="neutral" variant="subtle" size="sm" :label="passkey.authenticator" />
                 </div>
                 <p class="text-sm text-muted">
-                    {{ t('Added :time', { time: passkey.created_at_diff }) }}
+                    {{ t('Added {time}', { time: passkey.created_at_diff }) }}
                     <template v-if="passkey.last_used_at_diff">
                         <span class="mx-1 text-dimmed">/</span>
-                        {{ t('Last used :time', { time: passkey.last_used_at_diff }) }}
+                        {{ t('Last used {time}', { time: passkey.last_used_at_diff }) }}
                     </template>
                 </p>
             </div>
@@ -49,7 +49,7 @@ const handleDelete = () => {
             v-model:open="open"
             :title="t('Remove passkey')"
             :description="
-                t('Are you sure you want to remove the :name passkey? You will no longer be able to use it to sign in.', {
+                t('Are you sure you want to remove the {name} passkey? You will no longer be able to use it to sign in.', {
                     name: `&quot;${passkey.name}&quot;`,
                 })
             "

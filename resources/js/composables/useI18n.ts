@@ -1,22 +1,15 @@
 import { router, usePage } from '@inertiajs/vue3';
-import { en, es } from '@nuxt/ui/locale';
-import { computed } from 'vue';
+import { en } from '@nuxt/ui/locale';
+import { computed, watch } from 'vue';
+import { useI18n as useVueI18n } from 'vue-i18n';
 
 import { update } from '@/routes/locale';
 
-const uiLocales: Record<string, typeof en> = { en, es };
-
-const catalogs = import.meta.glob<Record<string, string>>('../../../lang/*.json', {
-    eager: true,
-    import: 'default',
-});
-
-function messages(code: string): Record<string, string> {
-    return catalogs[`../../../lang/${code}.json`] ?? {};
-}
+const uiLocales: Record<string, typeof en> = { en };
 
 export function useI18n() {
     const page = usePage();
+    const { t, locale: vueLocale } = useVueI18n();
 
     const locale = computed(() => page.props.locale);
     const locales = computed(() => page.props.locales);
@@ -28,15 +21,15 @@ export function useI18n() {
         })),
     );
 
-    function t(key: string, replace: Record<string, string | number> = {}): string {
-        let message = messages(locale.value)[key] ?? key;
-
-        for (const [name, value] of Object.entries(replace)) {
-            message = message.replaceAll(`:${name}`, String(value));
-        }
-
-        return message;
-    }
+    watch(
+        locale,
+        (code) => {
+            if (vueLocale.value !== code) {
+                vueLocale.value = code;
+            }
+        },
+        { immediate: true },
+    );
 
     function setLocale(code: string): void {
         router.put(update().url, { locale: code });

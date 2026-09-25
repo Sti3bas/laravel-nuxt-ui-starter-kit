@@ -16,7 +16,7 @@ class SetLocale
         $locale = $request->session()->get('locale')
             ?? $request->getPreferredLanguage(config('app.locales'));
 
-        if ($locale !== null) {
+        if (in_array($locale, config('app.locales'), true)) {
             app()->setLocale($locale);
         }
 
