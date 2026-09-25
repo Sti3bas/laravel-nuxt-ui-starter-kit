@@ -105,7 +105,7 @@ watch(isOpen, async (open) => {
                             />
                         </div>
 
-                        <UButton :label="modalConfig.buttonText" class="w-full" @click="handleModalNextStep" />
+                        <UButton :label="modalConfig.buttonText" block @click="handleModalNextStep" />
 
                         <USeparator label="or, enter the code manually" />
 

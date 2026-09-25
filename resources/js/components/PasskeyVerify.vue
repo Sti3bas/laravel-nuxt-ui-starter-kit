@@ -38,7 +38,7 @@ const { verify, isLoading, error, isSupported } = usePasskeyVerify({
                 type="button"
                 color="neutral"
                 variant="outline"
-                class="w-full"
+                block
                 icon="i-lucide-key-round"
                 :label="isLoading ? (props.loadingLabel ?? 'Authenticating...') : (props.label ?? 'Sign in with a passkey')"
                 :loading="isLoading"

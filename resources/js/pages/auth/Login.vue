@@ -57,7 +57,7 @@ defineProps<{
 
             <UCheckbox name="remember" label="Remember me" :tabindex="3" />
 
-            <UButton type="submit" label="Log in" class="mt-2 w-full" :tabindex="4" :loading="processing" data-test="login-button" />
+            <UButton type="submit" label="Log in" class="mt-2" block :tabindex="4" :loading="processing" data-test="login-button" />
         </div>
 
         <!-- @chisel-registration -->

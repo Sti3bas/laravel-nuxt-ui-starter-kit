@@ -55,7 +55,7 @@ const inputEmail = ref(props.email);
                 />
             </UFormField>
 
-            <UButton type="submit" label="Reset password" class="mt-2 w-full" :loading="processing" data-test="reset-password-button" />
+            <UButton type="submit" label="Reset password" class="mt-2" block :loading="processing" data-test="reset-password-button" />
         </div>
     </Form>
 </template>

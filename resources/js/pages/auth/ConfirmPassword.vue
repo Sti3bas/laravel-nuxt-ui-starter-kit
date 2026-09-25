@@ -36,7 +36,7 @@ defineOptions({
                 <PasswordInput name="password" class="w-full" required autocomplete="current-password" autofocus />
             </UFormField>
 
-            <UButton type="submit" label="Confirm password" class="w-full" :loading="processing" data-test="confirm-password-button" />
+            <UButton type="submit" label="Confirm password" block :loading="processing" data-test="confirm-password-button" />
         </div>
     </Form>
 </template>

@@ -28,13 +28,7 @@ defineProps<{
             </UFormField>
 
             <div class="my-6 flex items-center justify-start">
-                <UButton
-                    type="submit"
-                    label="Email password reset link"
-                    class="w-full"
-                    :loading="processing"
-                    data-test="email-password-reset-link-button"
-                />
+                <UButton type="submit" label="Email password reset link" block :loading="processing" data-test="email-password-reset-link-button" />
             </div>
         </Form>
 

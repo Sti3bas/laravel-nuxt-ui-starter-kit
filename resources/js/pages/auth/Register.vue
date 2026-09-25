@@ -53,7 +53,7 @@ defineOptions({
                 />
             </UFormField>
 
-            <UButton type="submit" label="Create account" class="mt-2 w-full" :tabindex="5" :loading="processing" data-test="register-user-button" />
+            <UButton type="submit" label="Create account" class="mt-2" block :tabindex="5" :loading="processing" data-test="register-user-button" />
         </div>
 
         <div class="text-center text-sm text-muted">

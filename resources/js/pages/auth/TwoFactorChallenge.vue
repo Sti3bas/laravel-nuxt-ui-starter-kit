@@ -50,7 +50,7 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
                     </div>
                     <InputError :message="errors.code" />
                 </div>
-                <UButton type="submit" label="Continue" class="w-full" :loading="processing" :disabled="code.join('').length < 6" />
+                <UButton type="submit" label="Continue" block :loading="processing" :disabled="code.join('').length < 6" />
                 <div class="text-center text-sm text-muted">
                     <span>or you can </span>
                     <button
@@ -68,7 +68,7 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
             <Form v-bind="store.form()" class="space-y-4" reset-on-error #default="{ errors, processing, clearErrors }">
                 <UInput name="recovery_code" type="text" placeholder="Enter recovery code" v-focus required class="w-full" />
                 <InputError :message="errors.recovery_code" />
-                <UButton type="submit" label="Continue" class="w-full" :loading="processing" />
+                <UButton type="submit" label="Continue" block :loading="processing" />
 
                 <div class="text-center text-sm text-muted">
                     <span>or you can </span>
